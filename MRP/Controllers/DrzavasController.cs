@@ -23,7 +23,7 @@ namespace MRP.Controllers
         // GET: Drzavas/Details/5
         public ActionResult Details(long? id)
         {
-            //komentar
+           
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
