@@ -11,7 +11,8 @@ namespace MRP.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class RadnoMesto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,6 +23,8 @@ namespace MRP.Models
         }
     
         public long Id { get; set; }
+        [Required(ErrorMessage = "Naziv je obavezno polje.")]
+        [StringLength(100,ErrorMessage="Naziv ne moze da sadrzi više od 100 karaktera.")]
         public string Naziv { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<MRP.Models.RadnoMesto>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Radna mesta</h2>
+
+<p>
+    @Html.ActionLink("Dodaj novo radno mesto", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Naziv)
+        </td>
+        <td>
+            @Html.ActionLink("Ažuriraj", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Obriši", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
