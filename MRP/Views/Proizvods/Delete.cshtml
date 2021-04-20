@@ -1,0 +1,42 @@
+﻿@model MRP.Models.Proizvod
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Brisanje proizvoda</h2>
+
+<h3>Da li ste sigurni da želite obrisati odabrani proizvod?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VremePripreme)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VremePripreme)
+        </dd>
+
+        <dt></dt>
+        <dd>@Html.ValidationMessageFor(model => model.VremePripreme, "", new { @class = "text-danger" })</dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Obriši" class="btn btn-default" /> |
+            @Html.ActionLink("Nazad", "Index")
+        </div>
+    }
+</div>

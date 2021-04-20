@@ -1,0 +1,33 @@
+﻿@model MRP.Models.Proizvod
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Prikaz proizvoda</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vreme)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vreme)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Azuriraj", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Nazad", "Index")
+</p>

@@ -173,6 +173,7 @@
     <Compile Include="Controllers\DrzavasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProizvodsController.cs" />
     <Compile Include="Controllers\RadnoMestoesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -312,6 +313,11 @@
     <Content Include="Views\RadnoMestoes\Details.cshtml" />
     <Content Include="Views\RadnoMestoes\Edit.cshtml" />
     <Content Include="Views\RadnoMestoes\Index.cshtml" />
+    <Content Include="Views\Proizvods\Create.cshtml" />
+    <Content Include="Views\Proizvods\Delete.cshtml" />
+    <Content Include="Views\Proizvods\Details.cshtml" />
+    <Content Include="Views\Proizvods\Edit.cshtml" />
+    <Content Include="Views\Proizvods\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

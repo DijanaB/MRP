@@ -11,7 +11,8 @@ namespace MRP.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class Proizvod
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,7 +24,10 @@ namespace MRP.Models
     
         public long Id { get; set; }
         public string Naziv { get; set; }
-        public Nullable<System.DateTime> VremePripreme { get; set; }
+        public long VremePripreme { get; set; }
+
+        [NotMapped]
+        public string Vreme { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sastojak> Sastojaks { get; set; }
