@@ -46,7 +46,10 @@ namespace MRP.Controllers
         // GET: Proizvods/Create
         public ActionResult Create()
         {
-            return View();
+            Proizvod proizvod = new Proizvod();
+            proizvod.Materijali = db.Materijals.OrderBy(x => x.Naziv).ToList();
+            proizvod.Sastojaks = new List<Sastojak>() { new Sastojak()};
+            return View(proizvod);
         }
 
         // POST: Proizvods/Create
@@ -196,15 +199,13 @@ namespace MRP.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="time"></param>
         /// <returns></returns>
-        public static TimeSpan GetTimeFromString(string time)
+        public ActionResult OnSelectSastojak(long id, Proizvod proizvod)
         {
-            // => Split passed string
-            string[] timeSplit = time.Split(':');
-            // => Create new TimeSpan based on string
-            return new TimeSpan(int.Parse(timeSplit[0]), int.Parse(timeSplit[1]), 0);
+            proizvod.Sastojaks = new List<Sastojak>() { new Sastojak(), new Sastojak() };
+            return View(proizvod);
         }
 
     }
 }
+;

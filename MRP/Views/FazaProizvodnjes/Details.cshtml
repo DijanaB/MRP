@@ -1,0 +1,25 @@
+﻿@model MRP.Models.FazaProizvodnje
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Prikaz faze proizvodnje</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Azuriraj", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Nazad", "Index")
+</p>

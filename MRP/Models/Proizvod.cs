@@ -11,6 +11,7 @@ namespace MRP.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class Proizvod
@@ -27,8 +28,13 @@ namespace MRP.Models
         public long VremePripreme { get; set; }
 
         [NotMapped]
+        [DisplayName("Vreme pripreme")]
         public string Vreme { get; set; }
-    
+        [NotMapped]
+        public string Sastojak { get; set; }
+        [NotMapped]
+        public List<Materijal> Materijali { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sastojak> Sastojaks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
