@@ -48,7 +48,6 @@ namespace MRP.Controllers
         {
             Proizvod proizvod = new Proizvod();
             proizvod.Materijali = db.Materijals.OrderBy(x => x.Naziv).ToList();
-            proizvod.Sastojaks = new List<Sastojak>() { new Sastojak()};
             return View(proizvod);
         }
 
@@ -57,19 +56,23 @@ namespace MRP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Naziv,VremePripreme,Vreme")] Proizvod proizvod)
+        public ActionResult Create([Bind(Include = "Id,Naziv,VremePripreme,Vreme")] Proizvod proizvod, FormCollection collection)
         {
             if (ModelState.IsValid)
             {
+                // Check name
                 if (db.Proizvods.Any(x => x.Naziv.Equals(proizvod.Naziv)))
                 {
                     ModelState.AddModelError("Naziv", "Proizvod sa unetim nazivom već postoji.");
+                    proizvod.Materijali = db.Materijals.OrderBy(x => x.Naziv).ToList();
                     return View(proizvod);
                 }
-                
-                if(proizvod.Vreme.Length < 5)
+
+                // Check time
+                if (proizvod.Vreme == null || proizvod.Vreme.Length < 5)
                 {
                     ModelState.AddModelError("Vreme", "Vreme mora biti uneto u formatu 00:00");
+                    proizvod.Materijali = db.Materijals.OrderBy(x => x.Naziv).ToList();
                     return View(proizvod);
                 }
 
@@ -82,13 +85,63 @@ namespace MRP.Controllers
                     timeSplit = proizvod.Vreme.Split(':');
                     time = new TimeSpan(int.Parse(timeSplit[0]), int.Parse(timeSplit[1]), 0);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     ModelState.AddModelError("Vreme", "Vreme mora biti uneto u formatu 00:00");
+                    proizvod.Materijali = db.Materijals.OrderBy(x => x.Naziv).ToList();
+                    return View(proizvod);
+                }
+
+                // sastojci
+                List<Materijal> materijali = db.Materijals.OrderBy(x => x.Naziv).ToList();
+                string[] sastojci = collection["Sastojci"].ToString().Split(',');
+                string[] kolicina = collection["Kolicina"].ToString().Split(',');
+                List<Sastojak> sastojciProizvoda = new List<Sastojak>();
+                for(int i=0; i<sastojci.Length; i++)
+                {
+                    try
+                    {
+                        int id = int.Parse(sastojci[i]);
+                        float kol = float.Parse(kolicina[i]);
+
+                        Sastojak sastojak = new Sastojak
+                        {
+                            Materijal = id,
+                            Kolicina = kol
+                        };
+
+                        if(sastojciProizvoda.Any(x=> x.Materijal == sastojak.Materijal))
+                        {
+                            ModelState.AddModelError("Materijali", "Odabrana su dva ista sastojka.");
+                            proizvod.Materijali = db.Materijals.OrderBy(x => x.Naziv).ToList();
+                            return View(proizvod);
+                        }
+                        sastojciProizvoda.Add(sastojak);
+                    }
+                    catch (Exception e)
+                    {
+                        ModelState.AddModelError("Materijali", "Sastojci nisu dobro unteti.");
+                        proizvod.Materijali = db.Materijals.OrderBy(x => x.Naziv).ToList();
+                        return View(proizvod);
+                    }
+                }
+                if (!sastojciProizvoda.Any())
+                {
+                    ModelState.AddModelError("Materijali", "Sastojci su obavezni.");
+                    proizvod.Materijali = db.Materijals.OrderBy(x => x.Naziv).ToList();
                     return View(proizvod);
                 }
                 proizvod.VremePripreme = time.Ticks;
                 db.Proizvods.Add(proizvod);
+                db.SaveChanges();
+
+                // Dodavanje sastojaka
+                for(int i = 0; i<sastojciProizvoda.Count; i++)
+                {
+                    sastojciProizvoda[i].Proizvod = proizvod.Id;
+                }
+                db.Sastojaks.AddRange(sastojciProizvoda);
+                // save
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -109,6 +162,7 @@ namespace MRP.Controllers
                 return HttpNotFound();
             }
             proizvod.Vreme = TimeSpan.FromTicks(proizvod.VremePripreme).ToString(@"hh\:mm");
+            proizvod.Materijali = db.Materijals.OrderBy(x => x.Naziv).ToList();
             return View(proizvod);
         }
 
@@ -196,14 +250,15 @@ namespace MRP.Controllers
             }
             base.Dispose(disposing);
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult OnSelectSastojak(long id, Proizvod proizvod)
+        [ChildActionOnly]
+        public ActionResult RenderMenu()
         {
-            proizvod.Sastojaks = new List<Sastojak>() { new Sastojak(), new Sastojak() };
-            return View(proizvod);
+            return PartialView("_Sastojci");
+        }
+
+        public ActionResult DisplayNewSastojak()
+        {
+            return PartialView("_Sastojci", db.Materijals.OrderBy(x => x.Naziv).ToList());
         }
 
     }

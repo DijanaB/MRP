@@ -12,6 +12,7 @@ namespace MRP.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class Proizvod
@@ -26,12 +27,9 @@ namespace MRP.Models
         public long Id { get; set; }
         public string Naziv { get; set; }
         public long VremePripreme { get; set; }
-
         [NotMapped]
         [DisplayName("Vreme pripreme")]
         public string Vreme { get; set; }
-        [NotMapped]
-        public string Sastojak { get; set; }
         [NotMapped]
         public List<Materijal> Materijali { get; set; }
 

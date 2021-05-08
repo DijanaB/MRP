@@ -1,0 +1,16 @@
+﻿@{
+
+    
+}
+<div class="row">
+    <div class="col-sm-6">
+        @Html.DropDownList("Sastojci", new SelectList(@Model, "Id", "Naziv"), new { @class = "form-control" })
+    </div>
+    <div class="col-sm-2">
+        <input class="form-control" name="Kolicina" type="number" step=".01" id="kolicina" value="" size="5" min="0.01" />
+    </div>
+    <div class="col-sm-1">
+        <input type="button" id="btnRemove" value="X" class="btn btn-danger" />
+    </div>
+</div>
+

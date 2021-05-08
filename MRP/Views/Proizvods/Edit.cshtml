@@ -10,7 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -32,6 +32,26 @@
             </div>
         </div>
 
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Materijali, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="row">
+                <div class="col-sm-6 SastojakClass">
+                    @Html.Partial("_Sastojci", Model.SastojciData)
+                </div>
+                <div class="col-sm-1">
+                    <input type="button" id="btnAdd" class="btn btn-success" value="Dodaj novi sastojak" />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.ValidationMessageFor(model => model.SastojciData, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Sacuvaj" class="btn btn-default" />
@@ -46,4 +66,21 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+            $(document).on('click', '#btnAdd', function (e) {
+                $.ajax({
+                    url: '/Proizvods/DisplayNewSastojak',
+                    success: function (partialView) {
+                        $('.SastojakClass').append(partialView);
+                    }
+                });
+            });
+
+            $(document).on('click', '#btnRemove', function (e) {
+                $(this)
+                    .parent()
+                    .parent()
+                    .remove();
+            });
+    </script>
 }

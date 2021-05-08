@@ -1,11 +1,11 @@
-﻿@model MRP.Models.Proizvod
+﻿
+@model MRP.Models.Proizvod
 
 @{
     ViewBag.Title = "Create";
 }
 
 <h2>Kreiranje proizvoda</h2>
-
 
 @using (Html.BeginForm())
 {
@@ -22,67 +22,64 @@
         </div>
     </div>
 
+
     <div class="form-group">
         @Html.LabelFor(model => model.Vreme, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Vreme, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Vreme, "", new { @class = "text-danger" })
-        </div>
-    </div>
-   
-    <div class="form-group">
-        @Html.LabelFor(model => model.Vreme, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Vreme, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Vreme, new { htmlAttributes = new { @class = "form-control", id = "naziv" } })
             @Html.ValidationMessageFor(model => model.Vreme, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Sastojaks, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-
-            @foreach (var client in Model.Sastojaks)
-            {
-                @Html.DropDownList("Sastojci", new SelectList(Model.Materijali, "Id", "Naziv"), new { @class = "form-control", @onchange = "selected(client)" })
-            }
-
+        @Html.LabelFor(model => model.Materijali, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="row">
+            <div class="col-sm-6 SastojakClass">
+                @Html.Partial("_Sastojci", Model.Materijali)
+            </div>
+            <div class="col-sm-1">
+                <input type="button" id="btnAdd" class="btn btn-success" value="Dodaj novi sastojak" />
+            </div>
         </div>
     </div>
-
-    
-
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Dodaj" class="btn btn-default" />
+        <div class="col-md-10"> 
+            @Html.ValidationMessageFor(model => model.Materijali, "", new { @class = "text-danger" })
+        </div>
+            
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Dodaj proizvod" class="btn btn-default" />
+            </div>
         </div>
     </div>
-</div>
-}
+    }
+    <div>
+        @Html.ActionLink("Nazad", "Index")
+    </div>
 
-<div>
-    @Html.ActionLink("Nazad", "Index")
-</div>
-
-@section Scripts {
-
-    @Scripts.Render("~/bundles/jqueryval")
-    <script>
-
-        function selected(id)
-        {
-            console.log("nesto", id)
-            $.ajax({
-                url: 'OnSelectSastojak',
-                data: { id, proizvod }
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script>
+            $(document).on('click', '#btnAdd', function (e) {
+                $.ajax({
+                    url: '/Proizvods/DisplayNewSastojak',
+                    success: function (partialView) {
+                        $('.SastojakClass').append(partialView);
+                    }
+                });
             });
 
-        }
+            $(document).on('click', '#btnRemove', function (e) {
+                $(this)
+                    .parent()
+                    .parent()
+                    .remove();
+            });
+        </script>
+    }
 
-    </script>
-
-    /**/
-}
-    /**/
 
 
