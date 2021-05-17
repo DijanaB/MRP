@@ -34,6 +34,7 @@ namespace MRP.Models
         public List<Materijal> Materijali { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [DisplayName("Sastojci")]
         public virtual ICollection<Sastojak> Sastojaks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VremenaProizvodnje> VremenaProizvodnjes { get; set; }

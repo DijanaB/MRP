@@ -25,6 +25,21 @@
             @Html.DisplayFor(model => model.Vreme)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Sastojaks)
+        </dt>
+        <dd>
+            @foreach (var item in Model.Sastojaks)
+            {
+                <div class="row">
+                    <div class="col-sm-3">
+                        @item.Materijal1.Naziv  @item.Kolicina @item.Materijal1.JedinicaMere
+                    </div>
+                 
+                </div>
+            }
+        </dd>
+
     </dl>
 </div>
 <p>

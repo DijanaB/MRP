@@ -26,6 +26,22 @@
             @Html.DisplayFor(model => model.VremePripreme)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Sastojaks)
+        </dt>
+        <dd>
+            @foreach (var item in Model.Sastojaks)
+            {
+                <div class="row">
+                    <div class="col-sm-3">
+                        @item.Materijal1.Naziv  @item.Kolicina @item.Materijal1.JedinicaMere
+                    </div>
+
+                </div>
+            }
+        </dd>
+
+
         <dt></dt>
         <dd>@Html.ValidationMessageFor(model => model.VremePripreme, "", new { @class = "text-danger" })</dd>
 
