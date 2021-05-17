@@ -318,7 +318,7 @@
     <Content Include="Views\Proizvods\Details.cshtml" />
     <Content Include="Views\Proizvods\Edit.cshtml" />
     <Content Include="Views\Proizvods\Index.cshtml" />
-    <Content Include="Views\Shared\_Sastojci.cshtml" />
+    <Content Include="Views\Shared\Sastojak.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
