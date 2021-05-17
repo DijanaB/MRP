@@ -11,14 +11,16 @@ namespace MRP.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class Sastojak
     {
         public long Id { get; set; }
         public Nullable<double> Kolicina { get; set; }
         public Nullable<long> Materijal { get; set; }
         public Nullable<long> Proizvod { get; set; }
-    
+        [NotMapped]
+        public List<Materijal> Materijali { get; set; }
         public virtual Materijal Materijal1 { get; set; }
         public virtual Proizvod Proizvod1 { get; set; }
     }

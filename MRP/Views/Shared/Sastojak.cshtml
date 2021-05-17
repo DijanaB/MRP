@@ -1,0 +1,23 @@
+﻿@model MRP.Models.Sastojak
+<div class="row">
+    <div class="col-sm-3">
+        @Html.DropDownListFor(model => model.Materijal, @Model.Materijali.Select(x => new SelectListItem
+   {
+       Value = x.Id.ToString(),
+       Text = x.Naziv,
+       Selected = x.Id == @Model.Materijal
+   }), new { @class = "form-control" })
+    </div>
+    <div class="col-sm-2">
+        @Html.EditorFor(model => model.Kolicina, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0.01", @step = ".01", @value = "0" } })
+    </div>
+    <div class="col-sm-1">
+        <input type="button" id="btnRemove" value="X" class="btn btn-danger" />
+    </div>
+</div>
+
+
+
+
+
+
