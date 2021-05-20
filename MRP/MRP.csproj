@@ -169,6 +169,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DobavljacsController.cs" />
     <Compile Include="Controllers\DrzavasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -178,6 +179,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Dobavljac.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -253,6 +255,7 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="wwwroot\images\kolaci.jpg" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -319,9 +322,15 @@
     <Content Include="Views\Proizvods\Edit.cshtml" />
     <Content Include="Views\Proizvods\Index.cshtml" />
     <Content Include="Views\Shared\Sastojak.cshtml" />
+    <Content Include="Views\Dobavljacs\Create.cshtml" />
+    <Content Include="Views\Dobavljacs\Delete.cshtml" />
+    <Content Include="Views\Dobavljacs\Details.cshtml" />
+    <Content Include="Views\Dobavljacs\Edit.cshtml" />
+    <Content Include="Views\Dobavljacs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
