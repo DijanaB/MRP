@@ -7,7 +7,7 @@
 <h2>Drzave</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Dodaj novu drzavu u sistem", "Create")
 </p>
 <table class="table">
     <tr>
@@ -23,9 +23,9 @@
             @Html.DisplayFor(modelItem => item.Naziv)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Azuriraj", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Prikazi", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Obrisi", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

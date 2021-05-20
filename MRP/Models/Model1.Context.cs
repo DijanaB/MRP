@@ -27,14 +27,12 @@ namespace MRP.Models
     
         public virtual DbSet<Dobavljac> Dobavljacs { get; set; }
         public virtual DbSet<Drzava> Drzavas { get; set; }
-        public virtual DbSet<FazaProizvodnje> FazaProizvodnjes { get; set; }
         public virtual DbSet<Materijal> Materijals { get; set; }
         public virtual DbSet<Oprema> Opremas { get; set; }
         public virtual DbSet<Proizvod> Proizvods { get; set; }
         public virtual DbSet<RadnoMesto> RadnoMestoes { get; set; }
         public virtual DbSet<Sastojak> Sastojaks { get; set; }
         public virtual DbSet<Skladiste> Skladistes { get; set; }
-        public virtual DbSet<VremenaProizvodnje> VremenaProizvodnjes { get; set; }
         public virtual DbSet<Zaposleni> Zaposlenis { get; set; }
     }
 }

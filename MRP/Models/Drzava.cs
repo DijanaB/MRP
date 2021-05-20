@@ -11,7 +11,8 @@ namespace MRP.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class Drzava
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,6 +24,8 @@ namespace MRP.Models
     
         public long Id { get; set; }
         public string Naziv { get; set; }
+        [NotMapped]
+        public List<string> DrzavaDropDown { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dobavljac> Dobavljacs { get; set; }

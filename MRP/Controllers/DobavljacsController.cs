@@ -1,131 +1,121 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using MRP.Models;
 
 namespace MRP.Controllers
 {
-    public class RadnoMestoesController : Controller
+    public class DobavljacsController : Controller
     {
         private mrpEntities db = new mrpEntities();
 
-        // GET: RadnoMestoes
+        // GET: Dobavljacs
         public ActionResult Index()
         {
-            return View(db.RadnoMestoes.OrderBy(x=> x.Naziv).ToList());
+            var dobavljacs = db.Dobavljacs.Include(d => d.Drzava1);
+            return View(dobavljacs.ToList());
         }
 
-        // GET: RadnoMestoes/Details/5
+        // GET: Dobavljacs/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RadnoMesto radnoMesto = db.RadnoMestoes.Find(id);
-            if (radnoMesto == null)
+            Dobavljac dobavljac = db.Dobavljacs.Find(id);
+            if (dobavljac == null)
             {
                 return HttpNotFound();
             }
-            return View(radnoMesto);
+            return View(dobavljac);
         }
 
-        // GET: RadnoMestoes/Create
+        // GET: Dobavljacs/Create
         public ActionResult Create()
         {
+            ViewBag.Drzava = new SelectList(db.Drzavas, "Id", "Naziv");
             return View();
         }
 
-        // POST: RadnoMestoes/Create
+        // POST: Dobavljacs/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Naziv")] RadnoMesto radnoMesto)
+        public ActionResult Create([Bind(Include = "Id,Naziv,Adresa,Grad,Drzava,Email,KontaktTelefon")] Dobavljac dobavljac)
         {
             if (ModelState.IsValid)
             {
-                // => Check if name is in use
-                if (db.RadnoMestoes.Any(x => x.Naziv.Equals(radnoMesto.Naziv)))
-                {
-                    ModelState.AddModelError("Naziv", "Radno mesto sa unetim nazivom već postoji.");
-                    return View(radnoMesto);
-                }
-                db.RadnoMestoes.Add(radnoMesto);
+                db.Dobavljacs.Add(dobavljac);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(radnoMesto);
+            ViewBag.Drzava = new SelectList(db.Drzavas, "Id", "Naziv", dobavljac.Drzava);
+            return View(dobavljac);
         }
 
-        // GET: RadnoMestoes/Edit/5
+        // GET: Dobavljacs/Edit/5
         public ActionResult Edit(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RadnoMesto radnoMesto = db.RadnoMestoes.Find(id);
-            if (radnoMesto == null)
+            Dobavljac dobavljac = db.Dobavljacs.Find(id);
+            if (dobavljac == null)
             {
                 return HttpNotFound();
             }
-            return View(radnoMesto);
+            ViewBag.Drzava = new SelectList(db.Drzavas, "Id", "Naziv", dobavljac.Drzava);
+            return View(dobavljac);
         }
 
-        // POST: RadnoMestoes/Edit/5
+        // POST: Dobavljacs/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Naziv")] RadnoMesto radnoMesto)
+        public ActionResult Edit([Bind(Include = "Id,Naziv,Adresa,Grad,Drzava,Email,KontaktTelefon")] Dobavljac dobavljac)
         {
             if (ModelState.IsValid)
             {
-                // => Check if new name is in use
-                if(db.RadnoMestoes.Any(x=>x.Id != radnoMesto.Id && x.Naziv.Equals(radnoMesto.Naziv)))
-                {
-                    ModelState.AddModelError("Naziv", "Radno mesto sa unetim nazivom već postoji.");
-                    return View(radnoMesto);
-                }
-                db.Entry(radnoMesto).State = EntityState.Modified;
+                db.Entry(dobavljac).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(radnoMesto);
+            ViewBag.Drzava = new SelectList(db.Drzavas, "Id", "Naziv", dobavljac.Drzava);
+            return View(dobavljac);
         }
 
-        // GET: RadnoMestoes/Delete/5
+        // GET: Dobavljacs/Delete/5
         public ActionResult Delete(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RadnoMesto radnoMesto = db.RadnoMestoes.Find(id);
-            if (radnoMesto == null)
+            Dobavljac dobavljac = db.Dobavljacs.Find(id);
+            if (dobavljac == null)
             {
                 return HttpNotFound();
             }
-            return View(radnoMesto);
+            return View(dobavljac);
         }
 
-        // POST: RadnoMestoes/Delete/5
+        // POST: Dobavljacs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            RadnoMesto radnoMesto = db.RadnoMestoes.Find(id);
-            // => Check if radno mesto is in use
-            if (db.Zaposlenis.Any(x=>x.RadnoMesto.HasValue && x.RadnoMesto.Value == radnoMesto.Id))
-            {
-                ModelState.AddModelError("Naziv", "Radno mesto je u upotrebi.");
-                return View(radnoMesto);
-            }
-            db.RadnoMestoes.Remove(radnoMesto);
+            Dobavljac dobavljac = db.Dobavljacs.Find(id);
+            db.Dobavljacs.Remove(dobavljac);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

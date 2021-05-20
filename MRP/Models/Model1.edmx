@@ -24,13 +24,6 @@
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Naziv" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="FazaProizvodnje">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Naziv" Type="varchar" MaxLength="50" />
-        </EntityType>
         <EntityType Name="Materijal">
           <Key>
             <PropertyRef Name="Id" />
@@ -87,16 +80,6 @@
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Naziv" Type="varchar" MaxLength="100" />
-        </EntityType>
-        <EntityType Name="VremenaProizvodnje">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DatumVreme" Type="datetime" />
-          <Property Name="FazaProizvodnje" Type="bigint" />
-          <Property Name="RadnoMesto" Type="bigint" />
-          <Property Name="Proizvod" Type="bigint" />
         </EntityType>
         <EntityType Name="Zaposleni">
           <Key>
@@ -185,42 +168,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VremenaProizvodnje_FazaProizvodnje">
-          <End Role="FazaProizvodnje" Type="Self.FazaProizvodnje" Multiplicity="0..1" />
-          <End Role="VremenaProizvodnje" Type="Self.VremenaProizvodnje" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FazaProizvodnje">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="VremenaProizvodnje">
-              <PropertyRef Name="FazaProizvodnje" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_VremenaProizvodnje_Proizvod">
-          <End Role="Proizvod" Type="Self.Proizvod" Multiplicity="0..1" />
-          <End Role="VremenaProizvodnje" Type="Self.VremenaProizvodnje" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proizvod">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="VremenaProizvodnje">
-              <PropertyRef Name="Proizvod" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_VremenaProizvodnje_RadnoMesto">
-          <End Role="RadnoMesto" Type="Self.RadnoMesto" Multiplicity="0..1" />
-          <End Role="VremenaProizvodnje" Type="Self.VremenaProizvodnje" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RadnoMesto">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="VremenaProizvodnje">
-              <PropertyRef Name="RadnoMesto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Zaposleni_Drzava">
           <End Role="Drzava" Type="Self.Drzava" Multiplicity="0..1" />
           <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="*" />
@@ -248,14 +195,12 @@
         <EntityContainer Name="mrpModelStoreContainer">
           <EntitySet Name="Dobavljac" EntityType="Self.Dobavljac" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Drzava" EntityType="Self.Drzava" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="FazaProizvodnje" EntityType="Self.FazaProizvodnje" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materijal" EntityType="Self.Materijal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Oprema" EntityType="Self.Oprema" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proizvod" EntityType="Self.Proizvod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RadnoMesto" EntityType="Self.RadnoMesto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sastojak" EntityType="Self.Sastojak" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Skladiste" EntityType="Self.Skladiste" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="VremenaProizvodnje" EntityType="Self.VremenaProizvodnje" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zaposleni" EntityType="Self.Zaposleni" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Dobavljac_Drzava" Association="Self.FK_Dobavljac_Drzava">
             <End Role="Drzava" EntitySet="Drzava" />
@@ -280,18 +225,6 @@
           <AssociationSet Name="FK_Sastojak_Sastojak" Association="Self.FK_Sastojak_Sastojak">
             <End Role="Proizvod" EntitySet="Proizvod" />
             <End Role="Sastojak" EntitySet="Sastojak" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VremenaProizvodnje_FazaProizvodnje" Association="Self.FK_VremenaProizvodnje_FazaProizvodnje">
-            <End Role="FazaProizvodnje" EntitySet="FazaProizvodnje" />
-            <End Role="VremenaProizvodnje" EntitySet="VremenaProizvodnje" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VremenaProizvodnje_Proizvod" Association="Self.FK_VremenaProizvodnje_Proizvod">
-            <End Role="Proizvod" EntitySet="Proizvod" />
-            <End Role="VremenaProizvodnje" EntitySet="VremenaProizvodnje" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VremenaProizvodnje_RadnoMesto" Association="Self.FK_VremenaProizvodnje_RadnoMesto">
-            <End Role="RadnoMesto" EntitySet="RadnoMesto" />
-            <End Role="VremenaProizvodnje" EntitySet="VremenaProizvodnje" />
           </AssociationSet>
           <AssociationSet Name="FK_Zaposleni_Drzava" Association="Self.FK_Zaposleni_Drzava">
             <End Role="Drzava" EntitySet="Drzava" />
@@ -329,14 +262,6 @@
           <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Dobavljacs" Relationship="Self.FK_Dobavljac_Drzava" FromRole="Drzava" ToRole="Dobavljac" />
           <NavigationProperty Name="Zaposlenis" Relationship="Self.FK_Zaposleni_Drzava" FromRole="Drzava" ToRole="Zaposleni" />
-        </EntityType>
-        <EntityType Name="FazaProizvodnje">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="VremenaProizvodnjes" Relationship="Self.FK_VremenaProizvodnje_FazaProizvodnje" FromRole="FazaProizvodnje" ToRole="VremenaProizvodnje" />
         </EntityType>
         <EntityType Name="Materijal">
           <Key>
@@ -376,7 +301,6 @@
           <Property Name="Naziv" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="VremePripreme" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Sastojaks" Relationship="Self.FK_Sastojak_Sastojak" FromRole="Proizvod" ToRole="Sastojak" />
-          <NavigationProperty Name="VremenaProizvodnjes" Relationship="Self.FK_VremenaProizvodnje_Proizvod" FromRole="Proizvod" ToRole="VremenaProizvodnje" />
         </EntityType>
         <EntityType Name="RadnoMesto">
           <Key>
@@ -384,7 +308,6 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Naziv" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="VremenaProizvodnjes" Relationship="Self.FK_VremenaProizvodnje_RadnoMesto" FromRole="RadnoMesto" ToRole="VremenaProizvodnje" />
           <NavigationProperty Name="Zaposlenis" Relationship="Self.FK_Zaposleni_RadnoMesto" FromRole="RadnoMesto" ToRole="Zaposleni" />
         </EntityType>
         <EntityType Name="Sastojak">
@@ -405,19 +328,6 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Naziv" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Materijals" Relationship="Self.FK_Materijal_Skladiste" FromRole="Skladiste" ToRole="Materijal" />
-        </EntityType>
-        <EntityType Name="VremenaProizvodnje">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DatumVreme" Type="DateTime" Precision="3" />
-          <Property Name="FazaProizvodnje" Type="Int64" />
-          <Property Name="RadnoMesto" Type="Int64" />
-          <Property Name="Proizvod" Type="Int64" />
-          <NavigationProperty Name="FazaProizvodnje1" Relationship="Self.FK_VremenaProizvodnje_FazaProizvodnje" FromRole="VremenaProizvodnje" ToRole="FazaProizvodnje" />
-          <NavigationProperty Name="Proizvod1" Relationship="Self.FK_VremenaProizvodnje_Proizvod" FromRole="VremenaProizvodnje" ToRole="Proizvod" />
-          <NavigationProperty Name="RadnoMesto1" Relationship="Self.FK_VremenaProizvodnje_RadnoMesto" FromRole="VremenaProizvodnje" ToRole="RadnoMesto" />
         </EntityType>
         <EntityType Name="Zaposleni">
           <Key>
@@ -484,18 +394,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VremenaProizvodnje_FazaProizvodnje">
-          <End Role="FazaProizvodnje" Type="Self.FazaProizvodnje" Multiplicity="0..1" />
-          <End Role="VremenaProizvodnje" Type="Self.VremenaProizvodnje" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FazaProizvodnje">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="VremenaProizvodnje">
-              <PropertyRef Name="FazaProizvodnje" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Materijal_Skladiste">
           <End Role="Skladiste" Type="Self.Skladiste" Multiplicity="0..1" />
           <End Role="Materijal" Type="Self.Materijal" Multiplicity="*" />
@@ -532,30 +430,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_VremenaProizvodnje_Proizvod">
-          <End Role="Proizvod" Type="Self.Proizvod" Multiplicity="0..1" />
-          <End Role="VremenaProizvodnje" Type="Self.VremenaProizvodnje" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Proizvod">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="VremenaProizvodnje">
-              <PropertyRef Name="Proizvod" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_VremenaProizvodnje_RadnoMesto">
-          <End Role="RadnoMesto" Type="Self.RadnoMesto" Multiplicity="0..1" />
-          <End Role="VremenaProizvodnje" Type="Self.VremenaProizvodnje" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RadnoMesto">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="VremenaProizvodnje">
-              <PropertyRef Name="RadnoMesto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Zaposleni_RadnoMesto">
           <End Role="RadnoMesto" Type="Self.RadnoMesto" Multiplicity="0..1" />
           <End Role="Zaposleni" Type="Self.Zaposleni" Multiplicity="*" />
@@ -571,14 +445,12 @@
         <EntityContainer Name="mrpEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Dobavljacs" EntityType="Self.Dobavljac" />
           <EntitySet Name="Drzavas" EntityType="Self.Drzava" />
-          <EntitySet Name="FazaProizvodnjes" EntityType="Self.FazaProizvodnje" />
           <EntitySet Name="Materijals" EntityType="Self.Materijal" />
           <EntitySet Name="Opremas" EntityType="Self.Oprema" />
           <EntitySet Name="Proizvods" EntityType="Self.Proizvod" />
           <EntitySet Name="RadnoMestoes" EntityType="Self.RadnoMesto" />
           <EntitySet Name="Sastojaks" EntityType="Self.Sastojak" />
           <EntitySet Name="Skladistes" EntityType="Self.Skladiste" />
-          <EntitySet Name="VremenaProizvodnjes" EntityType="Self.VremenaProizvodnje" />
           <EntitySet Name="Zaposlenis" EntityType="Self.Zaposleni" />
           <AssociationSet Name="FK_Dobavljac_Drzava" Association="Self.FK_Dobavljac_Drzava">
             <End Role="Drzava" EntitySet="Drzavas" />
@@ -596,10 +468,6 @@
             <End Role="Drzava" EntitySet="Drzavas" />
             <End Role="Zaposleni" EntitySet="Zaposlenis" />
           </AssociationSet>
-          <AssociationSet Name="FK_VremenaProizvodnje_FazaProizvodnje" Association="Self.FK_VremenaProizvodnje_FazaProizvodnje">
-            <End Role="FazaProizvodnje" EntitySet="FazaProizvodnjes" />
-            <End Role="VremenaProizvodnje" EntitySet="VremenaProizvodnjes" />
-          </AssociationSet>
           <AssociationSet Name="FK_Materijal_Skladiste" Association="Self.FK_Materijal_Skladiste">
             <End Role="Skladiste" EntitySet="Skladistes" />
             <End Role="Materijal" EntitySet="Materijals" />
@@ -611,14 +479,6 @@
           <AssociationSet Name="FK_Sastojak_Sastojak" Association="Self.FK_Sastojak_Sastojak">
             <End Role="Proizvod" EntitySet="Proizvods" />
             <End Role="Sastojak" EntitySet="Sastojaks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VremenaProizvodnje_Proizvod" Association="Self.FK_VremenaProizvodnje_Proizvod">
-            <End Role="Proizvod" EntitySet="Proizvods" />
-            <End Role="VremenaProizvodnje" EntitySet="VremenaProizvodnjes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_VremenaProizvodnje_RadnoMesto" Association="Self.FK_VremenaProizvodnje_RadnoMesto">
-            <End Role="RadnoMesto" EntitySet="RadnoMestoes" />
-            <End Role="VremenaProizvodnje" EntitySet="VremenaProizvodnjes" />
           </AssociationSet>
           <AssociationSet Name="FK_Zaposleni_RadnoMesto" Association="Self.FK_Zaposleni_RadnoMesto">
             <End Role="RadnoMesto" EntitySet="RadnoMestoes" />
@@ -647,14 +507,6 @@
           <EntitySetMapping Name="Drzavas">
             <EntityTypeMapping TypeName="mrpModel.Drzava">
               <MappingFragment StoreEntitySet="Drzava">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FazaProizvodnjes">
-            <EntityTypeMapping TypeName="mrpModel.FazaProizvodnje">
-              <MappingFragment StoreEntitySet="FazaProizvodnje">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Naziv" ColumnName="Naziv" />
               </MappingFragment>
@@ -720,17 +572,6 @@
               <MappingFragment StoreEntitySet="Skladiste">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Naziv" ColumnName="Naziv" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VremenaProizvodnjes">
-            <EntityTypeMapping TypeName="mrpModel.VremenaProizvodnje">
-              <MappingFragment StoreEntitySet="VremenaProizvodnje">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="DatumVreme" ColumnName="DatumVreme" />
-                <ScalarProperty Name="FazaProizvodnje" ColumnName="FazaProizvodnje" />
-                <ScalarProperty Name="RadnoMesto" ColumnName="RadnoMesto" />
-                <ScalarProperty Name="Proizvod" ColumnName="Proizvod" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

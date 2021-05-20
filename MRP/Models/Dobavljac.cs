@@ -11,7 +11,9 @@ namespace MRP.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class Dobavljac
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,9 +28,12 @@ namespace MRP.Models
         public string Adresa { get; set; }
         public string Grad { get; set; }
         public Nullable<long> Drzava { get; set; }
+        [Required(ErrorMessage = "The email address is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
         public string KontaktTelefon { get; set; }
-    
+        [NotMapped]
+        public List<Drzava> Drzave { get; set; }
         public virtual Drzava Drzava1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Materijal> Materijals { get; set; }

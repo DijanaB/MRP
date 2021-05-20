@@ -332,13 +332,6 @@ namespace MRP.Controllers
         public ActionResult DeleteConfirmed(long id)
         {
             Proizvod proizvod = db.Proizvods.Find(id);
-            // => Check if proizvod is in use
-            if (db.VremenaProizvodnjes.Any(x => x.Proizvod.HasValue && x.Proizvod.Value == proizvod.Id))
-            {
-                ModelState.AddModelError("Naziv", "Proizvod je u upotrebi.");
-                return View(proizvod);
-            }
-
             List<Sastojak> sastojci = db.Sastojaks.Where(x => x.Proizvod == id).ToList();
             db.Sastojaks.RemoveRange(sastojci);
             db.Proizvods.Remove(proizvod);
