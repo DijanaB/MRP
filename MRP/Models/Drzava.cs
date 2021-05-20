@@ -11,6 +11,7 @@ namespace MRP.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class Drzava
@@ -23,6 +24,7 @@ namespace MRP.Models
         }
     
         public long Id { get; set; }
+        [Required(ErrorMessage = "Naziv je obavezno polje")]
         public string Naziv { get; set; }
         [NotMapped]
         public List<string> DrzavaDropDown { get; set; }

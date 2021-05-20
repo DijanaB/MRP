@@ -25,9 +25,11 @@ namespace MRP.Models
         }
     
         public long Id { get; set; }
+        [Required(ErrorMessage = "Naziv je obavezno polje")]
         public string Naziv { get; set; }
         public long VremePripreme { get; set; }
         [NotMapped]
+        [Required(ErrorMessage = "Vreme pripreme je obavezno polje")]
         [DisplayName("Vreme pripreme")]
         public string Vreme { get; set; }
         [NotMapped]

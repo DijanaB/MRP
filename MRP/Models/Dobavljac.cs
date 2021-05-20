@@ -11,6 +11,7 @@ namespace MRP.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,16 +25,20 @@ namespace MRP.Models
         }
     
         public long Id { get; set; }
+        [Required(ErrorMessage = "Naziv je obavezno polje")]
         public string Naziv { get; set; }
+        [Required(ErrorMessage = "Adresa je obavezno polje")]
         public string Adresa { get; set; }
+        [Required(ErrorMessage = "Grad je obavezno polje")]
         public string Grad { get; set; }
+        [DisplayName("Drzava")]
         public Nullable<long> Drzava { get; set; }
-        [Required(ErrorMessage = "The email address is required")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Required(ErrorMessage = "Email adresa je obavezno polje")]
+        [EmailAddress(ErrorMessage = "Pogresno uneta email adresa")]
         public string Email { get; set; }
+        [Required(ErrorMessage = "Kontakt telefon je obavezno polje")]
         public string KontaktTelefon { get; set; }
-        [NotMapped]
-        public List<Drzava> Drzave { get; set; }
+        [DisplayName("Drzava")]
         public virtual Drzava Drzava1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Materijal> Materijals { get; set; }

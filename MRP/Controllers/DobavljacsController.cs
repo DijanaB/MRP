@@ -18,7 +18,7 @@ namespace MRP.Controllers
         public ActionResult Index()
         {
             var dobavljacs = db.Dobavljacs.Include(d => d.Drzava1);
-            return View(dobavljacs.ToList());
+            return View(dobavljacs.OrderBy(x=>x.Naziv).ToList());
         }
 
         // GET: Dobavljacs/Details/5
@@ -52,6 +52,24 @@ namespace MRP.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Dobavljacs.Any(x => x.Naziv.Equals(dobavljac.Naziv)))
+                {
+                    ModelState.AddModelError("Naziv", "Dobavljac sa unetim nazivom već postoji.");
+                }
+                if (db.Dobavljacs.Any(x => x.Email.Equals(dobavljac.Email)))
+                {
+                    ModelState.AddModelError("Email", "Dobavljac sa unetim email-om već postoji.");
+                }
+
+                if (db.Dobavljacs.Any(x => x.KontaktTelefon.Equals(dobavljac.KontaktTelefon)))
+                {
+                    ModelState.AddModelError("Email", "Dobavljac sa unetim kontakt telefonom već postoji.");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return View(dobavljac);
+                }
                 db.Dobavljacs.Add(dobavljac);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -86,6 +104,25 @@ namespace MRP.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (db.Dobavljacs.Any(x => x.Id != dobavljac.Id && x.Naziv.Equals(dobavljac.Naziv)))
+                {
+                    ModelState.AddModelError("Naziv", "Dobavljac sa unetim nazivom već postoji.");
+                }
+                if (db.Dobavljacs.Any(x => x.Id != dobavljac.Id  && x.Email.Equals(dobavljac.Email)))
+                {
+                    ModelState.AddModelError("Email", "Dobavljac sa unetim email-om već postoji.");
+                }
+
+                if (db.Dobavljacs.Any(x => x.Id != dobavljac.Id  && x.KontaktTelefon.Equals(dobavljac.KontaktTelefon)))
+                {
+                    ModelState.AddModelError("Email", "Dobavljac sa unetim kontakt telefonom već postoji.");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return View(dobavljac);
+                }
+
                 db.Entry(dobavljac).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -115,6 +152,11 @@ namespace MRP.Controllers
         public ActionResult DeleteConfirmed(long id)
         {
             Dobavljac dobavljac = db.Dobavljacs.Find(id);
+            if (db.Opremas.Any(x => x.Dobavljac == id) || db.Materijals.Any(x => x.Dobavljac == id))
+            {
+                ModelState.AddModelError("Naziv", "Dobavljac je u upotrebi.");
+                return View(dobavljac);
+            }
             db.Dobavljacs.Remove(dobavljac);
             db.SaveChanges();
             return RedirectToAction("Index");
