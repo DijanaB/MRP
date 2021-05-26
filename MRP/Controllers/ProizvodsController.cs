@@ -106,6 +106,17 @@ namespace MRP.Controllers
             }
 
             // sastojci
+            if (collection.AllKeys.Count() < 5)
+            {
+                ModelState.AddModelError("Materijali", "Sastojci su obavezni.");
+                proizvod.Materijali = db.Materijals.OrderBy(x => x.Naziv).ToList();
+                proizvod.Sastojaks = new List<Sastojak>() { new Sastojak() };
+                foreach (var sastojak in proizvod.Sastojaks)
+                {
+                    sastojak.Materijali = proizvod.Materijali;
+                }
+                return View(proizvod);
+            }
             string[] sastojci = collection["Materijal"].ToString().Split(',');
             string[] kolicina = collection["Kolicina"].ToString().Split(',');
             List<Sastojak> sastojciProizvoda = new List<Sastojak>();
@@ -237,6 +248,17 @@ namespace MRP.Controllers
                 }
             }
 
+            if (collection.AllKeys.Count() < 5)
+            {
+                ModelState.AddModelError("Materijali", "Sastojci su obavezni.");
+                proizvod.Materijali = db.Materijals.OrderBy(x => x.Naziv).ToList();
+                proizvod.Sastojaks = new List<Sastojak>() { new Sastojak() };
+                foreach (var sastojak in proizvod.Sastojaks)
+                {
+                    sastojak.Materijali = proizvod.Materijali;
+                }
+                return View(proizvod);
+            }
             // sastojci
             string[] sastojci = collection["Materijal"].ToString().Split(',');
             string[] kolicina = collection["Kolicina"].ToString().Split(',');
