@@ -173,8 +173,12 @@
     <Compile Include="Controllers\DrzavasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Materijals1Controller.cs" />
+    <Compile Include="Controllers\OpremasController.cs" />
     <Compile Include="Controllers\ProizvodsController.cs" />
     <Compile Include="Controllers\RadnoMestoesController.cs" />
+    <Compile Include="Controllers\SkladistesController.cs" />
+    <Compile Include="Controllers\ZaposlenisController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -327,6 +331,26 @@
     <Content Include="Views\Dobavljacs\Details.cshtml" />
     <Content Include="Views\Dobavljacs\Edit.cshtml" />
     <Content Include="Views\Dobavljacs\Index.cshtml" />
+    <Content Include="Views\Materijals1\Create.cshtml" />
+    <Content Include="Views\Materijals1\Delete.cshtml" />
+    <Content Include="Views\Materijals1\Details.cshtml" />
+    <Content Include="Views\Materijals1\Edit.cshtml" />
+    <Content Include="Views\Materijals1\Index.cshtml" />
+    <Content Include="Views\Opremas\Create.cshtml" />
+    <Content Include="Views\Opremas\Delete.cshtml" />
+    <Content Include="Views\Opremas\Details.cshtml" />
+    <Content Include="Views\Opremas\Edit.cshtml" />
+    <Content Include="Views\Opremas\Index.cshtml" />
+    <Content Include="Views\Skladistes\Create.cshtml" />
+    <Content Include="Views\Skladistes\Delete.cshtml" />
+    <Content Include="Views\Skladistes\Details.cshtml" />
+    <Content Include="Views\Skladistes\Edit.cshtml" />
+    <Content Include="Views\Skladistes\Index.cshtml" />
+    <Content Include="Views\Zaposlenis\Create.cshtml" />
+    <Content Include="Views\Zaposlenis\Delete.cshtml" />
+    <Content Include="Views\Zaposlenis\Details.cshtml" />
+    <Content Include="Views\Zaposlenis\Edit.cshtml" />
+    <Content Include="Views\Zaposlenis\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

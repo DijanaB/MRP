@@ -1,0 +1,65 @@
+﻿@model MRP.Models.Oprema
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+    <div>
+        <h4>Oprema</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Naziv)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Naziv)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DatumKupovine)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DatumKupovine)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.GodisnjaAmortizacija)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.GodisnjaAmortizacija)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PocetnaCena)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PocetnaCena)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TrenutnaVrednost)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TrenutnaVrednost)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Dobavljac1.Naziv)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Dobavljac1.Naziv)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Azuriraj", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Nazad", "Index")
+    </p>

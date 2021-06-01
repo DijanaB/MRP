@@ -11,7 +11,9 @@ namespace MRP.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Materijal
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,16 +23,22 @@ namespace MRP.Models
         }
     
         public long Id { get; set; }
+        [Required(ErrorMessage = "Naziv materijala je obavezno polje")]
         public string Naziv { get; set; }
         public Nullable<double> Kolicina { get; set; }
+        [DisplayName("Cena po jedinici mere")]
         public Nullable<double> CenaPoJediniciMere { get; set; }
+        [DisplayName("Jedinica mere")]
         public string JedinicaMere { get; set; }
+        [DisplayName("Ukupna cena")]
         public Nullable<double> UkupnaCena { get; set; }
         public Nullable<long> Skladiste { get; set; }
         public Nullable<long> Dobavljac { get; set; }
+        [DisplayName("Rok trajanja")]
         public Nullable<System.DateTime> RokTrajanja { get; set; }
-    
+        [DisplayName("Dobavljac")]
         public virtual Dobavljac Dobavljac1 { get; set; }
+        [DisplayName("Skladiste")]
         public virtual Skladiste Skladiste1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sastojak> Sastojaks { get; set; }

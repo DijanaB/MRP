@@ -1,0 +1,65 @@
+﻿@model IEnumerable<MRP.Models.Oprema>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Oprema</h2>
+
+<p>
+    @Html.ActionLink("Dodaj novu opremu", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Naziv)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DatumKupovine)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GodisnjaAmortizacija)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PocetnaCena)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrenutnaVrednost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dobavljac1)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatumKupovine)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GodisnjaAmortizacija)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PocetnaCena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrenutnaVrednost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dobavljac1.Naziv)
+            </td>
+            <td>
+                @Html.ActionLink("Azuriraj", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Prikazi", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Obrisi", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

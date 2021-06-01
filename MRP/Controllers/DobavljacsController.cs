@@ -17,30 +17,58 @@ namespace MRP.Controllers
         // GET: Dobavljacs
         public ActionResult Index()
         {
-            var dobavljacs = db.Dobavljacs.Include(d => d.Drzava1);
-            return View(dobavljacs.OrderBy(x=>x.Naziv).ToList());
+            if (User.Identity.IsAuthenticated)
+            {
+                var dobavljacs = db.Dobavljacs.Include(d => d.Drzava1);
+                return View(dobavljacs.OrderBy(x => x.Naziv).ToList());
+
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+            
         }
 
         // GET: Dobavljacs/Details/5
         public ActionResult Details(long? id)
         {
-            if (id == null)
+            if (User.Identity.IsAuthenticated)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Dobavljac dobavljac = db.Dobavljacs.Find(id);
+                if (dobavljac == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(dobavljac);
+
             }
-            Dobavljac dobavljac = db.Dobavljacs.Find(id);
-            if (dobavljac == null)
+            else
             {
                 return HttpNotFound();
             }
-            return View(dobavljac);
+
+            
         }
 
         // GET: Dobavljacs/Create
         public ActionResult Create()
         {
-            ViewBag.Drzava = new SelectList(db.Drzavas, "Id", "Naziv");
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.Drzava = new SelectList(db.Drzavas, "Id", "Naziv");
+                return View();
+
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+           
         }
 
         // POST: Dobavljacs/Create
@@ -50,49 +78,67 @@ namespace MRP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Naziv,Adresa,Grad,Drzava,Email,KontaktTelefon")] Dobavljac dobavljac)
         {
-            if (ModelState.IsValid)
+            if (User.Identity.IsAuthenticated)
             {
-                if (db.Dobavljacs.Any(x => x.Naziv.Equals(dobavljac.Naziv)))
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("Naziv", "Dobavljac sa unetim nazivom već postoji.");
-                }
-                if (db.Dobavljacs.Any(x => x.Email.Equals(dobavljac.Email)))
-                {
-                    ModelState.AddModelError("Email", "Dobavljac sa unetim email-om već postoji.");
+                    if (db.Dobavljacs.Any(x => x.Naziv.Equals(dobavljac.Naziv)))
+                    {
+                        ModelState.AddModelError("Naziv", "Dobavljac sa unetim nazivom već postoji.");
+                    }
+                    if (db.Dobavljacs.Any(x => x.Email.Equals(dobavljac.Email)))
+                    {
+                        ModelState.AddModelError("Email", "Dobavljac sa unetim email-om već postoji.");
+                    }
+
+                    if (db.Dobavljacs.Any(x => x.KontaktTelefon.Equals(dobavljac.KontaktTelefon)))
+                    {
+                        ModelState.AddModelError("Email", "Dobavljac sa unetim kontakt telefonom već postoji.");
+                    }
+
+                    if (!ModelState.IsValid)
+                    {
+                        return View(dobavljac);
+                    }
+                    db.Dobavljacs.Add(dobavljac);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
 
-                if (db.Dobavljacs.Any(x => x.KontaktTelefon.Equals(dobavljac.KontaktTelefon)))
-                {
-                    ModelState.AddModelError("Email", "Dobavljac sa unetim kontakt telefonom već postoji.");
-                }
+                ViewBag.Drzava = new SelectList(db.Drzavas, "Id", "Naziv", dobavljac.Drzava);
+                return View(dobavljac);
 
-                if (!ModelState.IsValid)
-                {
-                    return View(dobavljac);
-                }
-                db.Dobavljacs.Add(dobavljac);
-                db.SaveChanges();
-                return RedirectToAction("Index");
             }
-
-            ViewBag.Drzava = new SelectList(db.Drzavas, "Id", "Naziv", dobavljac.Drzava);
-            return View(dobavljac);
+            else
+            {
+                return HttpNotFound();
+            }
+            
         }
 
         // GET: Dobavljacs/Edit/5
         public ActionResult Edit(long? id)
         {
-            if (id == null)
+            if (User.Identity.IsAuthenticated)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Dobavljac dobavljac = db.Dobavljacs.Find(id);
+                if (dobavljac == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.Drzava = new SelectList(db.Drzavas, "Id", "Naziv", dobavljac.Drzava);
+                return View(dobavljac);
+
             }
-            Dobavljac dobavljac = db.Dobavljacs.Find(id);
-            if (dobavljac == null)
+            else
             {
                 return HttpNotFound();
             }
-            ViewBag.Drzava = new SelectList(db.Drzavas, "Id", "Naziv", dobavljac.Drzava);
-            return View(dobavljac);
+           
         }
 
         // POST: Dobavljacs/Edit/5
@@ -102,48 +148,66 @@ namespace MRP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Naziv,Adresa,Grad,Drzava,Email,KontaktTelefon")] Dobavljac dobavljac)
         {
-            if (ModelState.IsValid)
+            if (User.Identity.IsAuthenticated)
             {
-                if (db.Dobavljacs.Any(x => x.Id != dobavljac.Id && x.Naziv.Equals(dobavljac.Naziv)))
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("Naziv", "Dobavljac sa unetim nazivom već postoji.");
-                }
-                if (db.Dobavljacs.Any(x => x.Id != dobavljac.Id  && x.Email.Equals(dobavljac.Email)))
-                {
-                    ModelState.AddModelError("Email", "Dobavljac sa unetim email-om već postoji.");
-                }
+                    if (db.Dobavljacs.Any(x => x.Id != dobavljac.Id && x.Naziv.Equals(dobavljac.Naziv)))
+                    {
+                        ModelState.AddModelError("Naziv", "Dobavljac sa unetim nazivom već postoji.");
+                    }
+                    if (db.Dobavljacs.Any(x => x.Id != dobavljac.Id && x.Email.Equals(dobavljac.Email)))
+                    {
+                        ModelState.AddModelError("Email", "Dobavljac sa unetim email-om već postoji.");
+                    }
 
-                if (db.Dobavljacs.Any(x => x.Id != dobavljac.Id  && x.KontaktTelefon.Equals(dobavljac.KontaktTelefon)))
-                {
-                    ModelState.AddModelError("Email", "Dobavljac sa unetim kontakt telefonom već postoji.");
-                }
+                    if (db.Dobavljacs.Any(x => x.Id != dobavljac.Id && x.KontaktTelefon.Equals(dobavljac.KontaktTelefon)))
+                    {
+                        ModelState.AddModelError("Email", "Dobavljac sa unetim kontakt telefonom već postoji.");
+                    }
 
-                if (!ModelState.IsValid)
-                {
-                    return View(dobavljac);
-                }
+                    if (!ModelState.IsValid)
+                    {
+                        return View(dobavljac);
+                    }
 
-                db.Entry(dobavljac).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    db.Entry(dobavljac).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.Drzava = new SelectList(db.Drzavas, "Id", "Naziv", dobavljac.Drzava);
+                return View(dobavljac);
+
             }
-            ViewBag.Drzava = new SelectList(db.Drzavas, "Id", "Naziv", dobavljac.Drzava);
-            return View(dobavljac);
+            else
+            {
+                return HttpNotFound();
+            }
+            
         }
 
         // GET: Dobavljacs/Delete/5
         public ActionResult Delete(long? id)
         {
-            if (id == null)
+            if (User.Identity.IsAuthenticated)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Dobavljac dobavljac = db.Dobavljacs.Find(id);
+                if (dobavljac == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(dobavljac);
+
             }
-            Dobavljac dobavljac = db.Dobavljacs.Find(id);
-            if (dobavljac == null)
+            else
             {
                 return HttpNotFound();
             }
-            return View(dobavljac);
+            
         }
 
         // POST: Dobavljacs/Delete/5
@@ -151,19 +215,29 @@ namespace MRP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Dobavljac dobavljac = db.Dobavljacs.Find(id);
-            if (db.Opremas.Any(x => x.Dobavljac == id) || db.Materijals.Any(x => x.Dobavljac == id))
+            if (User.Identity.IsAuthenticated)
             {
-                ModelState.AddModelError("Naziv", "Dobavljac je u upotrebi.");
-                return View(dobavljac);
+                Dobavljac dobavljac = db.Dobavljacs.Find(id);
+                if (db.Opremas.Any(x => x.Dobavljac == id) || db.Materijals.Any(x => x.Dobavljac == id))
+                {
+                    ModelState.AddModelError("Naziv", "Dobavljac je u upotrebi.");
+                    return View(dobavljac);
+                }
+                db.Dobavljacs.Remove(dobavljac);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+
             }
-            db.Dobavljacs.Remove(dobavljac);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            else
+            {
+                return HttpNotFound();
+            }
+            
         }
 
         protected override void Dispose(bool disposing)
         {
+
             if (disposing)
             {
                 db.Dispose();

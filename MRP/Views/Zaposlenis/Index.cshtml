@@ -1,0 +1,91 @@
+﻿@model IEnumerable<MRP.Models.Zaposleni>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <h2>Zaposleni</h2>
+    <p>
+        @Html.ActionLink("Dodaj novog zaposlenog", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prezime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Plata)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatumRodjenja)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adresa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Grad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kontakt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Drzava1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RadnoMesto1)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prezime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Plata)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumRodjenja)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adresa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Grad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kontakt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Drzava1.Naziv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RadnoMesto1.Naziv)
+                </td>
+                <td>
+                    @Html.ActionLink("Azuriraj", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Prikazi", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Obrisi", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

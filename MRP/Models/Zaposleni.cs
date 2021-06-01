@@ -11,21 +11,27 @@ namespace MRP.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Zaposleni
     {
         public long Id { get; set; }
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public Nullable<double> Plata { get; set; }
+        [DisplayName("Datum rodjenja")]
         public Nullable<System.DateTime> DatumRodjenja { get; set; }
         public string Adresa { get; set; }
         public string Grad { get; set; }
+        [Display(Name = "Drzava")]
         public Nullable<long> Drzava { get; set; }
+        [DisplayName("Radno mesto")]
         public Nullable<long> RadnoMesto { get; set; }
         public string Kontakt { get; set; }
-    
+        [DisplayName("Drzava")]
         public virtual Drzava Drzava1 { get; set; }
+        [DisplayName("Radno mesto")]
         public virtual RadnoMesto RadnoMesto1 { get; set; }
     }
 }

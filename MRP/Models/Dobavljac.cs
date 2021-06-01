@@ -37,6 +37,7 @@ namespace MRP.Models
         [EmailAddress(ErrorMessage = "Pogresno uneta email adresa")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Kontakt telefon je obavezno polje")]
+        [Display(Name = "Kontakt telefon")]
         public string KontaktTelefon { get; set; }
         [DisplayName("Drzava")]
         public virtual Drzava Drzava1 { get; set; }

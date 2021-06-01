@@ -11,17 +11,24 @@ namespace MRP.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Oprema
     {
         public long Id { get; set; }
+        [Required(ErrorMessage = "Naziv opreme je obavezno polje.")]
         public string Naziv { get; set; }
+        [DisplayName("Datum kupovine")]
         public Nullable<System.DateTime> DatumKupovine { get; set; }
+        [DisplayName("Godisnja amortizacija")]
         public Nullable<double> GodisnjaAmortizacija { get; set; }
         public Nullable<long> Dobavljac { get; set; }
+        [DisplayName("Pocetna cena")]
         public Nullable<double> PocetnaCena { get; set; }
+        [DisplayName("Trenutna vrednost")]
         public Nullable<double> TrenutnaVrednost { get; set; }
-    
+        [DisplayName("Dobavljac")]
         public virtual Dobavljac Dobavljac1 { get; set; }
     }
 }

@@ -18,10 +18,18 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Proizvodi", "Index", "Proizvods", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Radna mesta", "Index", "RadnoMestoes", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Drzave", "Index", "Drzavas", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Dobavljaci", "Index", "Dobavljacs", new { area = "" }, new { @class = "navbar-brand" })
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    @Html.ActionLink("Proizvodi", "Index", "Proizvods", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Radna mesta", "Index", "RadnoMestoes", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Drzave", "Index", "Drzavas", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Dobavljaci", "Index", "Dobavljacs", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Materijali", "Index", "Materijals1", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Oprema", "Index", "Opremas", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Skladista", "Index", "Skladistes", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Zaposleni", "Index", "Zaposlenis", new { area = "" }, new { @class = "navbar-brand" })
+                }
             </div>
             <div class="navbar-collapse collapse">
                 @Html.Partial("_LoginPartial")
